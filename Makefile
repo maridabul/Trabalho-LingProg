@@ -6,7 +6,7 @@ LDFLAGS=$(shell perl -MExtUtils::Embed -e ldopts)
 
 all: programa
 
-programa: perlWrapper.o
+programa: menu.o perlWrapper.o interface.o
 #programa: main.o perlWrapper.o menu.o interface.o
 	$(LD) -o $@ $? $(LDFLAGS)
 

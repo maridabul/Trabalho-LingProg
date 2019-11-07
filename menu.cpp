@@ -4,6 +4,8 @@
 #include <string>
 #include "menu.h"
 
+Menu::Menu () : operacao (0) {}
+
 
 void Menu::exibirOperacoes ()
 {
