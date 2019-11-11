@@ -22,8 +22,8 @@ class perlWrapper {
     
     //funcoes
     string funcaoTipoA (string, string, int);
-    void funcaoTipoB (string, string, string, string, string);
-    double funcaoTipoC (string, string, string);
+    void funcaoTipoB (string, string, string, string, string, int);
+    double funcaoTipoC (string, string, string, int);
 
   private:  
     PerlInterpreter *my_perl;

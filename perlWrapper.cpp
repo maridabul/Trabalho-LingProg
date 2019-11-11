@@ -52,31 +52,10 @@ string perlWrapper::funcaoTipoA (string par1, string funcaoPerl, int op)
 
  
   string resultado;
- 
-  if (op == 2)
+
+  if ((op == 2) || (op == 3)) 
     resultado = POPp;               // tira o valor de retorno da pilha
   
-    /*
-  if (op == 3)
-  {
-
-    // PROCURAR QUAL O POP PARA PONTEIRO DE STRING!!!!
-    string *arrayPalavras = POPp;
-    int indice = 0;    
-
-    resultado = "arquivoPalavrasNaoEncontradas.txt";
-    ofstream arquivo; 
-    arquivo.open (resultado);
-
-    while ( (arrayPalavras[indice]).compare("\0") != 0)
-    {
-      arquivo << arrayPalavras[indice] << endl;
-      indice++;
-    }
-    
-    arquivo.close ();  
-  }
-  */  
   PUTBACK;
   FREETMPS;
   LEAVE;
@@ -84,7 +63,7 @@ string perlWrapper::funcaoTipoA (string par1, string funcaoPerl, int op)
   return resultado;
 }
 
-void perlWrapper::funcaoTipoB (string arquivoInput, string par2, string par3, string arquivoOutput, string funcaoPerl)
+void perlWrapper::funcaoTipoB (string arquivoInput, string par2, string par3, string arquivoOutput, string funcaoPerl, int op)
 {
   dSP;                                // inicializa o ponteiro da pilha
   ENTER;                              // e tudo criado depois
@@ -92,8 +71,7 @@ void perlWrapper::funcaoTipoB (string arquivoInput, string par2, string par3, st
   PUSHMARK(SP);                       // lembra do ponteiro de pilha
   XPUSHs(sv_2mortal(newSVpv(arquivoInput.c_str (), arquivoInput.length () )));  // coloca o primeiro parametro na pilha
   XPUSHs(sv_2mortal(newSVpv(par2.c_str (), par2.length () )));  // coloca o segundo parametro na pilha
-// caso op == 5, soh sao passados dois parametros, logo par3 == NULL
-  if (par3.compare(NULL) != 0)
+  if (op == 4)
     XPUSHs(sv_2mortal(newSVpv(par3.c_str (), par3.length () )));  // coloca o terceiro parametro na pilha
   XPUSHs(sv_2mortal(newSVpv(arquivoOutput.c_str (), arquivoOutput.length () )));
   PUTBACK;                            // faz o ponteiro da pilha make local se tornar global
@@ -108,17 +86,19 @@ void perlWrapper::funcaoTipoB (string arquivoInput, string par2, string par3, st
 
 }
 
-double perlWrapper::funcaoTipoC (string arquivoInput, string arquivoOutput, string funcaoPerl)
+double perlWrapper::funcaoTipoC (string arquivoInput, string arquivoOutput, string funcaoPerl, int op)
 {
   dSP;                                // inicializa o ponteiro da pilha
   ENTER;                              // e tudo criado depois
   SAVETMPS;                            // variavel temp
   PUSHMARK(SP);                       // lembra do ponteiro de pilha
   XPUSHs(sv_2mortal(newSVpv (arquivoInput.c_str (), arquivoInput.length () )));  // coloca o primeiro parametro na pilha
-  if (arquivoOutput.compare(NULL) != 0)
+  if (op == 7)  
     XPUSHs(sv_2mortal(newSVpv (arquivoOutput.c_str (), arquivoOutput.length () ))); 
+    
+
   PUTBACK;                            // faz o ponteiro da pilha make local se tornar global
-  // USO CORRETO DO c_str () ???
+
   call_pv (funcaoPerl.c_str (), G_SCALAR);   // chama a funcao
   SPAGAIN;                            // reinicializa o ponteiro da pilha  
   

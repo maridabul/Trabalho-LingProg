@@ -12,7 +12,7 @@ using namespace std;
 class Menu {
   public:
     Menu ();
-    ~Menu ();
+//    ~Menu ();
 
     void exibirOperacoes ();
     void setOperacao (); 
