@@ -1,6 +1,34 @@
-use File::Copy qw(move);
+package funcoesPerl;
+use 5.022001;
 use warnings;
 use strict;
+use Exporter;
+
+our @ISA = qw(Exporter);
+
+our %EXPORT_TAGS = ( 'all' => [ qw(
+	
+) ] );
+
+our @EXPORT_OK = ( @{ $EXPORT_TAGS{'all'} } );
+
+
+our @EXPORT = qw(
+  importarArquivoParaArray
+  importarDicionarioParaArray 
+  verificarPalavraNoDicionario
+  verificarArrayPalavrasNoDicionario
+  verificarPalavraEmArquivo
+  verificarArrayPalavrasEmArquivo
+  substituirExpressaoEmArquivo
+  censurarExpressoesInadequadas
+  verificarErrosPortuguesString    
+  verificarErrosPortuguesArquivo
+  porcentagemErro
+  porcentagemSemelhanca
+);
+
+our $VERSION = '0.01';
 
 # Funcao armazena cada palavra do arquivo desejado nos indices de um vetor. Esse vetor de palavras eh retornado quando a funcao for chamada. Espacos sao desconsiderados nessa funcao.
 #

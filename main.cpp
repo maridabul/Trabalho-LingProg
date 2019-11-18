@@ -12,7 +12,7 @@ int main ()
 {
   Interface interface;
 
-  interface.executarInterpretadorPerl ((char *)"funcoesPerl.pl");
+  interface.executarInterpretadorPerl ((char *)"intermediario.pl");
   interface.executarInterface ();
 
   return 0;
