@@ -19,6 +19,8 @@ class Interface : public Menu, public perlWrapper {
     void exibirMenuOperacoes ();
     void chamarFuncaoPerl ();  
     void executarInterface ();
+
+    bool inputNumerico (string);
   private:  
 
 };
