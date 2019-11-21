@@ -26,6 +26,7 @@ our @EXPORT = qw(
   verificarErrosPortuguesArquivo
   porcentagemErro
   porcentagemSemelhanca
+  criarArquivoPalavrasNaoEncontradas 
 );
 
 our $VERSION = '0.01';
