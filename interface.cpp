@@ -15,6 +15,7 @@
   #include <stdlib.h>
 #endif
 
+using namespace std;
 
 Interface::Interface () : Menu(), perlWrapper (0, NULL, NULL){}
 
@@ -27,7 +28,7 @@ void Interface::exibirMenuOperacoes ()
        << "4 - Substituir expressao em arquivo\n"
        << "5 - Censurar expressoes inadequadas\n" 
        << "6 - Porcentagem de erro do texto\n"
-       << "7 - Porcentagem semelhanca entre dois textos\n\n" << endl;
+       << "7 - Porcentagem semelhanca entre dois textos\n" << endl;
 }
 
 void Interface::executarInterface ()
