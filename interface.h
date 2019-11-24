@@ -16,13 +16,13 @@ class Interface : public Menu, public perlWrapper {
   public:
     Interface ();
 
-    void exibirMenuOperacoes ();
     void chamarFuncaoPerl ();  
     void executarInterface ();
 
     bool inputNumerico (string);
-  private:  
 
+  private:
+    void exibirArquivo (string);
 };
 
 #endif

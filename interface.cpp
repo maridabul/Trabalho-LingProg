@@ -9,34 +9,17 @@
 #include "perlWrapper.h"
 #include "interface.h"
 
-#ifdef __cplusplus__
-  #include <cstdlib>
-#else
-  #include <stdlib.h>
-#endif
 
 using namespace std;
 
 Interface::Interface () : Menu(), perlWrapper (0, NULL, NULL){}
 
-void Interface::exibirMenuOperacoes () 
-{
-  cout << "Selecione uma operacao: \n" 
-       << "1 - Sair do programa\n" 
-       << "2 - Verificar palavra no dicionario\n"
-       << "3 - Analisar ortograficamente texto\n"
-       << "4 - Substituir expressao em arquivo\n"
-       << "5 - Censurar expressoes inadequadas\n" 
-       << "6 - Porcentagem de erro do texto\n"
-       << "7 - Porcentagem semelhanca entre dois textos\n" << endl;
-}
-
 void Interface::executarInterface ()
 {
-  if (system("CLS")) system("clear");
+  system("clear");
   while (getOperacao() != 1)
   {
-    exibirMenuOperacoes ();    
+    exibirOperacoes ();    
     setOperacao ();
     chamarFuncaoPerl();
   }
@@ -77,7 +60,7 @@ void Interface::chamarFuncaoPerl ()
     }
     catch (int)
     {
-      cout << "Entrada nao compativel com o esperado\n" << endl;
+      cout << "\nEntrada nao compativel com o esperado\n" << endl;
       cout << "Entrada deve ser uma palavra\n\n" << endl;
       return;
     }
@@ -99,12 +82,15 @@ void Interface::chamarFuncaoPerl ()
 
     string arquivoOutput = perlWrapper::funcaoTipoA (arquivoInput, "criarArquivoPalavrasNaoEncontradas", 3);
 
-    cout <<  "O arquivo com as palavras nao encontradas esta em \""<< arquivoOutput <<"\"" << endl;
+    cout << "Palavras nao encontradas no dicionario:\n";
+    exibirArquivo (arquivoOutput);
+
+    cout <<  "\nO arquivo com as palavras nao encontradas esta em \""<< arquivoOutput <<"\"" << endl;
 
     return;
     }
     catch (string) {
-      cout << "Erro: arquivo nao encontrado\n\n" << endl;
+      cout << "\nErro: arquivo nao encontrado\n\n" << endl;
       return;
     }
   }
@@ -127,18 +113,18 @@ void Interface::chamarFuncaoPerl ()
 
       cout << "\nInsira a expressao original que deseja substituir:\n" << endl;
       cin >> original;
-      cout << "\nE o substituto:\n";
+      cout << "\nE o substituto:\n" << endl;
       cin >> substituto;
       
       string arquivoAlterado = "alteracoes.bak";
       perlWrapper::funcaoTipoB (arquivoInput, original, substituto, arquivoAlterado, "substituirExpressaoEmArquivo", 4);
     
-      cout <<  "O arquivo alterado esta em 'alteracoes.bak'.\n" << endl;
+      cout <<  "\nO arquivo alterado esta em 'alteracoes.bak'.\n" << endl;
       return;
     }
     catch (string)
     {
-      cout << "Erro: arquivo nao encontrado\n\n" << endl;
+      cout << "\nErro: arquivo nao encontrado\n\n" << endl;
       return;
     }
   }
@@ -182,7 +168,7 @@ void Interface::chamarFuncaoPerl ()
     }
     catch (string arquivo)
     {
-      cout << "Erro ao abrir arquivo" << arquivo << "\n\n" << endl;
+      cout << "\nErro ao abrir arquivo" << arquivo << "\n\n" << endl;
       return;
     }
     
@@ -211,7 +197,7 @@ void Interface::chamarFuncaoPerl ()
     }
     catch (string)
     {
-      cout << "Erro: arquivo nao encontrado\n" << endl;
+      cout << "\nErro: arquivo nao encontrado\n" << endl;
       return;
     }
   }
@@ -247,7 +233,7 @@ void Interface::chamarFuncaoPerl ()
     }
     catch (string)
     {
-      cout << "Erro: arquivo nao encontrado\n" << endl;
+      cout << "\nErro: arquivo nao encontrado\n" << endl;
       return;
     } 
   }
@@ -265,8 +251,18 @@ bool Interface::inputNumerico (string input)
 } 
   
 
-
-
+void Interface::exibirArquivo (string nomeArquivo)
+{
+  string line;
+  ifstream arquivo (nomeArquivo);
+  if (arquivo.is_open())
+  {
+    while (getline (arquivo, line))
+      cout << line << endl;
+    
+    arquivo.close();
+  }
+}
 
 
 

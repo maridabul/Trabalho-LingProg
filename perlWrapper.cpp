@@ -36,14 +36,14 @@ void perlWrapper::executarInterpretadorPerl (char *arquivo)
   perl_run(my_perl);
 }
 
-string perlWrapper::funcaoTipoA (string par1, string funcaoPerl, int op)
+string perlWrapper::funcaoTipoA (string parametro1, string funcaoPerl, int op)
 {
   dSP;
   ENTER;
   SAVETMPS;
   PUSHMARK (SP);
 
-  XPUSHs (sv_2mortal (newSVpv (par1.c_str (), par1.length ()) ));
+  XPUSHs (sv_2mortal (newSVpv (parametro1.c_str (), parametro1.length ()) ));
 
   PUTBACK;
 
@@ -63,50 +63,48 @@ string perlWrapper::funcaoTipoA (string par1, string funcaoPerl, int op)
   return resultado;
 }
 
-void perlWrapper::funcaoTipoB (string arquivoInput, string par2, string par3, string arquivoOutput, string funcaoPerl, int op)
+void perlWrapper::funcaoTipoB (string arquivoInput, string parametro2, string parametro3, string arquivoOutput, string funcaoPerl, int op)
 {
-  dSP;                                // inicializa o ponteiro da pilha
-  ENTER;                              // e tudo criado depois
-  SAVETMPS;                            // variavel temp
-  PUSHMARK(SP);                       // lembra do ponteiro de pilha
-  XPUSHs(sv_2mortal(newSVpv(arquivoInput.c_str (), arquivoInput.length () )));  // coloca o primeiro parametro na pilha
-  XPUSHs(sv_2mortal(newSVpv(par2.c_str (), par2.length () )));  // coloca o segundo parametro na pilha
+  dSP;                                
+  ENTER;                              
+  SAVETMPS;                            
+  PUSHMARK(SP);                       
+  XPUSHs(sv_2mortal(newSVpv(arquivoInput.c_str (), arquivoInput.length () )));  
+  XPUSHs(sv_2mortal(newSVpv(parametro2.c_str (), parametro2.length () )));  
   if (op == 4)
-    XPUSHs(sv_2mortal(newSVpv(par3.c_str (), par3.length () )));  // coloca o terceiro parametro na pilha
+    XPUSHs(sv_2mortal(newSVpv(parametro3.c_str (), parametro3.length () )));  
   XPUSHs(sv_2mortal(newSVpv(arquivoOutput.c_str (), arquivoOutput.length () )));
-  PUTBACK;                            // faz o ponteiro da pilha make local se tornar global
-  call_pv (funcaoPerl.c_str (), G_SCALAR);   // chama a funcao
-  SPAGAIN;                            // reinicializa o ponteiro da pilha  
+  PUTBACK;                            
+  call_pv (funcaoPerl.c_str (), G_SCALAR);   
+  SPAGAIN;                            
 
-  // NAO TEM RETORNO, COMO FICA ESSE PEDACO DA FUNCAO????  
-//  int resultado = POPi;               // tira o valor de retorno da pilha 
   PUTBACK;      
-  FREETMPS;                          // libera o valor de retorno
-  LEAVE;                              // e o XPUSHed "mortal" args
+  FREETMPS;                          
+  LEAVE;                              
 
 }
 
 double perlWrapper::funcaoTipoC (string arquivoInput, string arquivoOutput, string funcaoPerl, int op)
 {
-  dSP;                                // inicializa o ponteiro da pilha
-  ENTER;                              // e tudo criado depois
-  SAVETMPS;                            // variavel temp
-  PUSHMARK(SP);                       // lembra do ponteiro de pilha
-  XPUSHs(sv_2mortal(newSVpv (arquivoInput.c_str (), arquivoInput.length () )));  // coloca o primeiro parametro na pilha
+  dSP;                                
+  ENTER;                              
+  SAVETMPS;                           
+  PUSHMARK(SP);                       
+  XPUSHs(sv_2mortal(newSVpv (arquivoInput.c_str (), arquivoInput.length () )));  
   if (op == 7)  
     XPUSHs(sv_2mortal(newSVpv (arquivoOutput.c_str (), arquivoOutput.length () ))); 
     
 
-  PUTBACK;                            // faz o ponteiro da pilha make local se tornar global
+  PUTBACK;                            
 
-  call_pv (funcaoPerl.c_str (), G_SCALAR);   // chama a funcao
-  SPAGAIN;                            // reinicializa o ponteiro da pilha  
+  call_pv (funcaoPerl.c_str (), G_SCALAR);   
+  SPAGAIN;                        
   
-  double resultado = POPn;               // tira o valor de retorno da pilha
+  double resultado = POPn;               
   
   PUTBACK;      
-  FREETMPS;                          // libera o valor de retorno
-  LEAVE;                              // e o XPUSHed "mortal" args
+  FREETMPS;                          
+  LEAVE;                              
 
   return resultado;  
 }

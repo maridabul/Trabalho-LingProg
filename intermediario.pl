@@ -22,11 +22,24 @@ sub criarArquivoPalavrasNaoEncontradas {
   # escrever no arquivo as palavras nao encontradas no dicionario
   foreach (@arrayNaoEncontradas)
   {
-    #$_ = $arrayNaoEncontradas[$indiceNaoEncontradas];
-    #print ESCRITA $_;
-    print ESCRITA ($arrayNaoEncontradas[$indiceNaoEncontradas]);
-    print ESCRITA "\n";
-    $indiceNaoEncontradas += 1;
+    my $indice; 
+    #caso seja a primeira ocorrencia da palavra
+    my $repetida = 0; 
+    for ($indice = 0; $indice < $indiceNaoEncontradas; $indice++)
+    {
+      if ((@arrayNaoEncontradas [$indice] cmp @arrayNaoEncontradas [$indiceNaoEncontradas]) == 0)
+      {
+        #caso exista mais de uma ocorrencia da palavra
+        $repetida = 1;
+      }
+    }
+
+    if ($repetida == 0)
+    {
+      print ESCRITA ($arrayNaoEncontradas[$indiceNaoEncontradas]);
+      print ESCRITA "\n";
+    }
+      $indiceNaoEncontradas += 1;
   }
 
   close(ESCRITA);
